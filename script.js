@@ -9,16 +9,16 @@ const inputTransactionAmount =document.querySelector('#amount')
 //console.log({inputTransactionName, inputTransactionAmount})
 /* console.log({ incomeDisplay, expenseDisplay, balanceDisplay}) */
 
-let dummyTransactions = [
-    { id: 1, name: 'Bolo de Brigadeiro', amount: -20 },
-    { id: 2, name: 'Salário', amount: 300 },
-    { id: 3, name: 'Torta de Frango', amount: -10 },
-    { id: 4, name: 'Violão', amount: 150 }
-]
 
+
+const localStorageTransaction = JSON.parse(localStorage
+    .getItem('transactions'))
+let transactions = localStorage
+.getItem('transactions') !== null ? localStorageTransaction : []
     const removeTransaction = ID => {
-
-        dummyTransactions = dummyTransactions.filter(transaction => transaction.id !== ID)
+        transactions = transactions.filter(transaction => 
+            transaction.id !== ID)
+            updateLocalStorage()
         init()
     }
 
@@ -41,7 +41,7 @@ const addTransactionIntoDOM = transaction => {
 }
 
 const updateBalanceValues = () => {
-    const transactionsAmounts = dummyTransactions
+    const transactionsAmounts = transactions
     .map(transaction => transaction.amount)
     const total = transactionsAmounts
     .reduce((accumulator, transaction) => accumulator + transaction, 0).toFixed(2)
@@ -66,11 +66,15 @@ const expense = Math.abs(transactionsAmounts
 
 const init = () => {
     transactionsUl.innerHTML = ''
-    dummyTransactions.forEach(addTransactionIntoDOM)
+    transactions.forEach(addTransactionIntoDOM)
     updateBalanceValues()
 }
 
 init()
+
+const updateLocalStorage = () => {
+    localStorage.setItem('transactions', JSON.stringify(transactions))
+}
 
 const generateID = () => Math.round(Math.random() * 1000)
 
@@ -89,8 +93,9 @@ form.addEventListener('submit', event => {
         name: transactionName, 
         amount: +transactionsAmount 
     }
-    dummyTransactions.push(transaction)
+    transactions.push(transaction)
     init()
+    updateLocalStorage()
 
     inputTransactionName.value = ''
     inputTransactionAmount.value = ''
@@ -98,4 +103,4 @@ form.addEventListener('submit', event => {
         //console.log(transaction)
 })
 
-//addTransactionIntoDOM(dummyTransactions[0])
+//addTransactionIntoDOM(transactions[0])
