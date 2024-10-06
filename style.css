@@ -9,7 +9,7 @@
 }
 
 body {
-  background-color: #f7f7f7;
+  background-color: #f7f7f76e;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,8 +20,14 @@ body {
 }
 
 .container {
-  margin: 30px auto;
-  width: 350px;
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+  transition: all 0.3s ease;
 }
 
 h1 {
